@@ -1,6 +1,7 @@
 import pokemonArray from "./data/pokemon.js";
 
 const cardContainer = document.querySelector(".card-container");
+const input = document.querySelector("#search");
 
 const makePokemonCard = (characterObject) => {
   let firstLetterCapitals =
@@ -8,7 +9,9 @@ const makePokemonCard = (characterObject) => {
     characterObject.name.slice(1);
   const cardHTML = `
     <div class = "card">
-       <img class = "card__image" src=${characterObject.sprite} alt="">
+       <img class = "card__image" src=${characterObject.sprite} alt="image of ${
+    characterObject.name
+  }">
        <div class = "card__content">
          <h2 class = "card__heading">${firstLetterCapitals}</h2>
          <p class = "card__text">${firstLetterCapitals} (#${
@@ -22,9 +25,26 @@ const makePokemonCard = (characterObject) => {
 };
 
 const populateCards = (characterCards) => {
-  cardContainer.innerHTML = characterCards.map((character) => {
-    return makePokemonCard(character);
-  }).join("");
+  cardContainer.innerHTML = characterCards
+    .map((character) => {
+      return makePokemonCard(character);
+    })
+    .join("");
 };
 
-populateCards(pokemonArray);
+//populateCards(pokemonArray);
+
+const handleSearch = (event) => {
+  const searchValue = event.target.value.toLowerCase();
+  const filteredSearch = pokemonArray.filter((pokemon) => {
+    if (pokemon.name.toLowerCase().includes(searchValue)) {
+      return true;
+    } else {
+      return false;
+    }
+  });
+  populateCards(filteredSearch);
+};
+
+
+input.addEventListener("input", handleSearch);
