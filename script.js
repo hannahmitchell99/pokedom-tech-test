@@ -32,16 +32,10 @@ const populateCards = (characterCards) => {
     .join("");
 };
 
-//populateCards(pokemonArray);
-
 const handleSearch = (event) => {
   const searchValue = event.target.value.toLowerCase();
   const filteredSearch = pokemonArray.filter((pokemon) => {
-    if (pokemon.name.toLowerCase().includes(searchValue)) {
-      return true;
-    } else {
-      return false;
-    }
+    return pokemon.name.toLowerCase().includes(searchValue) || pokemon.types.toString().toLowerCase().includes(searchValue)
   });
   populateCards(filteredSearch);
 };
