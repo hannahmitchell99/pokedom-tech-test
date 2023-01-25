@@ -1,7 +1,9 @@
 import pokemonArray from "./data/pokemon.js";
 
 const cardContainer = document.querySelector(".card-container");
-const input = document.querySelector("#search");
+const inputType = document.querySelector("#search-type");
+const inputName = document.querySelector("#search-name");
+
 
 const makePokemonCard = (characterObject) => {
   let firstLetterCapitals =
@@ -32,13 +34,23 @@ const populateCards = (characterCards) => {
     .join("");
 };
 
-const handleSearch = (event) => {
+const handleSearchType = (event) => {
   const searchValue = event.target.value.toLowerCase();
   const filteredSearch = pokemonArray.filter((pokemon) => {
-    return pokemon.name.toLowerCase().includes(searchValue) || pokemon.types.toString().toLowerCase().includes(searchValue)
+    return pokemon.types.toString().toLowerCase().includes(searchValue)
   });
   populateCards(filteredSearch);
 };
 
+const handleSearchName = (event) => {
+    const searchValue = event.target.value.toLowerCase();
+    const filteredSearch = pokemonArray.filter((pokemon) => {
+      return pokemon.name.toLowerCase().includes(searchValue)
+    });
+    populateCards(filteredSearch);
+  };
 
-input.addEventListener("input", handleSearch);
+inputName.addEventListener("input", handleSearchName);
+inputType.addEventListener("input", handleSearchType);
+
+
